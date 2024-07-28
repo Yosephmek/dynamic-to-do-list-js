@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Select DOM elements
     const addButton = document.getElementById('add-task-btn');
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
@@ -12,22 +11,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to add a task to the DOM and optionally save it to Local Storage
     function addTask(taskText, save = true) {
+        // Create a new li element and set its textContent to taskText
         const li = document.createElement('li');
         li.textContent = taskText;
 
-        // Create a remove button for the task
+        // Create a new button element for removing the task
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.className = 'remove-btn';
-        // Assign an onclick event to the remove button to remove the task from the DOM and Local Storage
+
+        // Assign an onclick event to the remove button to remove the li element from taskList
         removeButton.onclick = function() {
             taskList.removeChild(li);
             removeTaskFromStorage(taskText);
         };
 
-        // Append the remove button to the task list item, then append the item to the task list
+        // Append the remove button to the li element, then append the li to taskList
         li.appendChild(removeButton);
         taskList.appendChild(li);
+
+        // Clear the task input field
+        taskInput.value = "";
 
         // Save the task to Local Storage if the save parameter is true
         if (save) {
@@ -57,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         addTask(taskText);
-        taskInput.value = "";
     });
 
     // Add event listener to taskInput for the 'keypress' event to allow adding tasks by pressing "Enter"
@@ -69,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             addTask(taskText);
-            taskInput.value = "";
         }
     });
 
